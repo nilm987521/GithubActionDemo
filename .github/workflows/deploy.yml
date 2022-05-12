@@ -1,0 +1,21 @@
+name: 'Tomcat Deploy'
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  Tomcat_Deploy:
+    runs-on: self-hosted
+    
+    steps:
+    - uses: actions/checkout@v2
+  
+    - name: Stop JVM
+      run: sh StopApp.sh
+
+    - name: Build Jar File
+      run: mvn package
+
+    - name: Start JVM
+      run: java -jar target/GitHubActionDemo-0.0.1-SNAPSHOT.jar
